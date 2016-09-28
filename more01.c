@@ -5,6 +5,7 @@ DATE:2016.9.27
 ******************************************************************************/
 
 #include<stdio.h>
+#include<stdlib.h>
 
 #define PAGELEN 24
 #define LINELEN 512
@@ -22,7 +23,8 @@ main(int argc, char ** argv)
 	}
 	else
 	{
-		while(-- argc)
+		while(argc --)
+		
 		if((fp == fopen(* ++ argv, "r" )) != NULL)
 		{
 			do_more( fp );
@@ -39,7 +41,7 @@ void do_more( FILE * fp )
 	char line[LINELEN];
 	int num_of_lines = 0;
 	int see_more(), reply;
-	while( fgets(line, LINELEN, fp) ) /* more imput*/
+	while( fgets(line, LINELEN, fp) ) /* more input*/
 	{
 		if( num_of_lines == PAGELEN ) /*full screen*/
 		{
@@ -50,8 +52,10 @@ void do_more( FILE * fp )
 			}
 			num_of_lines -= reply; /*reset count*/
 		}
-		if( fputs( line, stdout ) == EOF ) /*show line*/
+		if( fputs( line, stdout) == EOF ) /*show line*/
+		{
 			exit(1);
+		}
 		num_of_lines++; /*count it*/
 	}
 }
