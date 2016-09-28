@@ -60,4 +60,14 @@ int see_more()
 {
 	int c;
 	printf("\033[7m more? \033[m");
-
+	while( (c = getchar())!=EOF)
+	{
+		if(c == 'q')
+			return 0;
+		if( c == '\n')
+			return PAGELEN;
+		if( c == '\n')
+			return 1;
+	}	
+	return 0;
+}
