@@ -16,14 +16,14 @@ int
 main(int argc, char ** argv)
 {
 	FILE *fp;
-	if(ac == 1)
+	if(argc == 1)
 	{
 		do_more(stdin);
 	}
 	else
 	{
-		while(-- ac)
-		if((fp == fopen(* ++ av, "r" )) != NULL)
+		while(-- argc)
+		if((fp == fopen(* ++ argv, "r" )) != NULL)
 		{
 			do_more( fp );
 			fclose( fp );
@@ -39,34 +39,34 @@ void do_more( FILE * fp )
 	char line[LINELEN];
 	int num_of_lines = 0;
 	int see_more(), reply;
-	while( fgets(line, LINELEN, fp) )
+	while( fgets(line, LINELEN, fp) ) /* more imput*/
 	{
-		if( num_of_lines == PAGELEN )
+		if( num_of_lines == PAGELEN ) /*full screen*/
 		{
-			reply = see_more();
-			if(reply == 0)
+			reply = see_more(); /*y:done*/
+			if(reply == 0) /*n:done*/
 			{
 				break;
 			}
-			num_of_lines -= reply;
+			num_of_lines -= reply; /*reset count*/
 		}
-		if( fputs( line, stdout ) == EOF )
+		if( fputs( line, stdout ) == EOF ) /*show line*/
 			exit(1);
-		num_of_lines++;
+		num_of_lines++; /*count it*/
 	}
 }
 
 int see_more()
 {
 	int c;
-	printf("\033[7m more? \033[m");
-	while( (c = getchar())!=EOF)
+	printf("\033[7m more? \033[m"); /*reverse on at vt100*/
+	while( (c = getchar())!=EOF) /*get response*/
 	{
-		if(c == 'q')
+		if(c == 'q') /*q -> n*/
 			return 0;
-		if( c == '\n')
-			return PAGELEN;
-		if( c == '\n')
+		if( c == ' ') /*' ' => next page*/
+			return PAGELEN; /*how many to show*/
+		if( c == '\n') /*Enter key => 1 line*/
 			return 1;
 	}	
 	return 0;
