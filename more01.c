@@ -24,6 +24,7 @@ main(int argc, char ** argv)
 	else
 	{
 		while(argc --)
+		{
 		
 		if((fp == fopen(* ++ argv, "r" )) != NULL)
 		{
@@ -32,6 +33,7 @@ main(int argc, char ** argv)
 		}
 		else
 			exit(1);
+		}
 	}
 	return 0;
 }
